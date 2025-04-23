@@ -1,0 +1,35 @@
+Ultimate Gaming Rig:
+
+1. NZXT H9 Elite - 568.99
+2. NZXT Kraken 240 RGB - 349
+3. AMD Ryzen 7 9800X3D - 1179
+4. ASUS TUF Gaming GeForce RTX 5080 OC 16GB - 3349
+5. ASRock X870 Steel Legend WiFi - 598.5
+6. Seasonic FOCUS GX-1000 1000W - 334.04
+7. Kingston FURY Beast White RGB 64GB (2x32GB) 6000MHz - 473.63
+8. Kingston KC3000 4TB - 562.52
+
+
+Content Creator Workstation:
+
+1. GIGABYTE C301 GLASS WHITE V2 - 202.67
+2. Arctic Liquid Freezer III 240 A-RGB - 169
+3. AMD Ryzen 7 9700X - 759.29
+4. ASRock AMD Radeon RX 7700 XT Steel Legend 12GB OC - 1019.61
+5. GIGABYTE B850 AORUS ELITE ICE WIFI7 - 521.28
+6. Seasonic FOCUS GX-850 850W - 283
+7. G.SKILL Trident Z5 Silver RGB 32GB (2x16GB) 6000MHz - 234.2
+8. Samsung 990 EVO Plus 2TB - 278.87
+
+
+Budget Gaming PC:
+
+1. GIGABYTE C102 GLASS ICE - 140
+2. Arctic Freezer 36 A-RGB (White) - 70.80
+3. AMD Ryzen 5 5600X - 294.32
+4. ASRock AMD Radeon RX 7600 Steel Legend 8GB OC - 649
+5. ASRock B550M Pro4 - 216.37
+6. FSP Group HYPER 80+ PRO 650W - 109
+7. Corsair Vengeance PRO RGB White 16GB (2x8GB) 3600MHz - 119.5
+8. Kingston KC3000 1TB - 169.73
+
