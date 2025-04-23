@@ -1,0 +1,171 @@
+﻿@model List<object>
+@{
+    ViewData["Title"] = "PC Components";
+
+    // Dictionary to store component categories and their links and icons
+    var componentCategories = new Dictionary<string, (string link, string icon)>() {
+        { "CPUs", ("Cpus", "fas fa-microchip") },
+        { "Motherboards", ("Motherboards", "fas fa-server") },
+        { "Graphics Cards", ("Gpus", "fas fa-photo-video") },
+        { "Memory (RAM)", ("Memory", "fas fa-memory") },
+        { "Storage (SSDs)", ("Storage", "fas fa-hdd") },
+        { "Power Supplies", ("PowerSupplies", "fas fa-plug") },
+        { "Cases", ("Cases", "fas fa-desktop") },
+        { "Coolers", ("Coolers", "fas fa-fan") }
+    };
+}
+
+<!-- Hero Section -->
+<section class="hero-section text-white py-5">
+    <div class="container text-center py-5">
+        <h1 class="display-4 fw-bold mb-4 glow-text">PC Components</h1>
+        <p class="lead mb-4">Browse our comprehensive collection of high-quality PC components to build your dream system.</p>
+    </div>
+</section>
+
+<!-- Category Selection Section -->
+<section class="py-5 bg-dark-purple">
+    <div class="container">
+        <h2 class="text-center text-neon mb-5">Choose a Component Category</h2>
+        <div class="row g-4 justify-content-center">
+            @foreach (var category in componentCategories)
+            {
+                <div class="col-md-3 col-sm-6">
+                    <div class="card h-100 cyber-card border-0 category-card" onclick="window.location.href='@Url.Action(category.Value.link, "Home")'">
+                        <div class="card-body text-center p-4">
+                            <div class="display-4 text-neon mb-3">
+                                <i class="@category.Value.icon"></i>
+                            </div>
+                            <h3 class="card-title h5 mb-3 text-cyan">@category.Key</h3>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</section>
+
+<!-- Quick Link to System Builder -->
+<section class="py-5 bg-darkest">
+    <div class="container text-center">
+        <h2 class="text-neon mb-4">Ready to Start Building?</h2>
+        <p class="lead mb-4 text-light">Use our system builder to create your custom PC with compatibility checking.</p>
+        <a href="@Url.Action("SystemBuilder", "Home")" class="btn btn-neon btn-lg" style="color: #00ffff; text-decoration: underline;" " >Go to System Builder</a>
+    </div>
+</section>
+
+@section Scripts {
+    <script>
+        // No longer needed as we're using direct links
+        function navigateToSection(sectionId) {
+            const section = document.getElementById(sectionId);
+            if (section) {
+                window.scrollTo({
+                    top: section.offsetTop - 100,
+                    behavior: 'smooth'
+                });
+            }
+        }
+    </script>
+
+    <style>
+        /* Custom styles for Components page */
+        :root {
+            --neon-pink: #ff00ff;
+            --neon-blue: #00ffff;
+            --neon-purple: #8a2be2;
+            --dark-purple: #1a1025;
+            --darkest: #0d0714;
+            --card-bg: #1e1636;
+        }
+
+        body {
+            background-color: var(--darkest);
+            color: #ffffff;
+        }
+
+        .hero-section {
+            background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('/images/PC.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            min-height: 75vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .glow-text {
+            color: white;
+            text-shadow: 0 0 10px rgba(255, 0, 255, 0.7), 0 0 20px rgba(255, 0, 255, 0.5);
+        }
+
+        .bg-dark-purple {
+            background-color: var(--dark-purple);
+        }
+
+        .bg-darkest {
+            background-color: var(--darkest);
+        }
+
+        .category-card {
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background-color: var(--card-bg);
+        }
+
+            .category-card:hover {
+                transform: translateY(-10px) scale(1.03);
+                box-shadow: 0 0 30px rgba(255, 0, 255, 0.6);
+            }
+
+        .component-card {
+            transition: all 0.3s ease;
+            background-color: var(--card-bg);
+        }
+
+            .component-card:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 0 20px rgba(255, 0, 255, 0.5);
+            }
+
+        .component-section {
+            padding-top: 6rem;
+            margin-top: -2rem;
+        }
+
+        .cyber-filter select {
+            background-color: rgba(26, 16, 37, 0.8);
+            border: 1px solid var(--neon-purple);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+        }
+
+            .cyber-filter select:focus {
+                box-shadow: 0 0 0 0.25rem rgba(255, 0, 255, 0.25);
+                border-color: var(--neon-pink);
+            }
+
+        .card-img-container {
+            height: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .card-img-top {
+            max-height: 180px;
+            object-fit: contain;
+        }
+
+        .text-neon {
+            color: var(--neon-pink);
+        }
+
+        .text-cyan {
+            color: var(--neon-blue);
+        }
+    </style>
+}

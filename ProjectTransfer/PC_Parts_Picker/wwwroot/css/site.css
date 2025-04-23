@@ -1,0 +1,93 @@
+:root {
+    --bs-primary: #0066cc;
+    --bs-primary-rgb: 0, 102, 204;
+    --bs-secondary: #003366;
+    --bs-secondary-rgb: 0, 51, 102;
+    --bs-warning: #ff9900;
+    --bs-warning-rgb: 255, 153, 0;
+}
+
+html {
+    position: relative;
+    min-height: 100%;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.navbar-brand {
+    font-size: 1.5rem;
+}
+
+.nav-link {
+    font-weight: 500;
+    padding: 0.5rem 1rem !important;
+}
+
+    .nav-link:hover {
+        color: var(--bs-primary) !important;
+    }
+
+.btn-primary {
+    background-color: var(--bs-primary);
+    border-color: var(--bs-primary);
+}
+
+    .btn-primary:hover {
+        background-color: #0055aa;
+        border-color: #0055aa;
+    }
+
+.btn-warning {
+    background-color: var(--bs-warning);
+    border-color: var(--bs-warning);
+    color: #fff;
+}
+
+    .btn-warning:hover {
+        background-color: #e68a00;
+        border-color: #e68a00;
+        color: #fff;
+    }
+
+.text-primary {
+    color: var(--bs-primary) !important;
+}
+
+.text-warning {
+    color: var(--bs-warning) !important;
+}
+
+.bg-primary {
+    background-color: var(--bs-primary) !important;
+}
+
+.bg-secondary {
+    background-color: var(--bs-secondary) !important;
+}
+
+footer {
+    margin: 0 !important;
+    background-color: var(--bs-secondary) !important;
+}
+
+.card {
+    transition: transform 0.3s;
+    border-radius: 0.5rem;
+}
+
+    .card:hover {
+        transform: translateY(-5px);
+    }
+
+.card-img-top {
+    object-fit: contain;
+    height: 180px;
+}
+
+@media (max-width: 992px) {
+    .navbar-nav {
+        margin-top: 1rem;
+    }
+}

@@ -1,0 +1,408 @@
+﻿@model PC_Parts_Picker.Models.SystemBuilderViewModel
+@{
+    ViewData["Title"] = "Your Custom PC Build";
+}
+
+<section class="hero-section text-white py-4">
+    <div class="container text-center py-4">
+        <h1 class="display-5 fw-bold mb-3 glow-text">Your Custom PC Build</h1>
+        <p class="lead mb-4">We've created the perfect PC configuration based on your preferences.</p>
+        <div class="badges mb-4">
+            <span class="badge bg-neon text-dark">@Model.UsageType</span>
+            <span class="badge bg-purple">@Model.Budget</span>
+            <span class="badge bg-cyan text-dark">@Model.TotalPrice.ToString("C2")</span>
+        </div>
+    </div>
+</section>
+
+<section class="py-5 bg-dark-purple">
+    <div class="container">
+        <div class="cyber-card p-4 mb-5">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="mb-4">
+                        <h3 class="text-neon">Build Summary</h3>
+                        <ul class="list-group cyber-list mt-3">
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                <span>Usage</span>
+                                <span class="badge bg-neon text-dark">@Model.UsageType</span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                <span>Budget Range</span>
+                                <span class="badge bg-purple">@Model.Budget</span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                <span>Size</span>
+                                <span>@Model.FormFactor Form Factor</span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                <span>Total Price</span>
+                                <span class="text-neon fw-bold">@Model.TotalPrice.ToString("C2")</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="mt-4">
+                        <div class="d-grid gap-2">
+                            <a href="@Url.Action("SystemBuilder", "Home")" class="btn btn-outline-neon">Modify Build</a>
+                            <button class="btn btn-neon" id="saveBuildBtn">Save Build</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="text-center p-4">
+                        <img src="@(string.IsNullOrEmpty(Model.Case.Image) ? "/images/default-case.png" : Model.Case.Image)" class="img-fluid build-preview mb-3" alt="PC Build Preview">
+                        <h4 class="text-cyan">@Model.BuildName</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Component List -->
+        <h3 class="text-neon mb-4">Component List</h3>
+
+        <div class="cyber-card p-4 mb-4">
+            <div class="row align-items-center">
+                <div class="col-md-2 col-sm-3 text-center">
+                    <img src="@(string.IsNullOrEmpty(Model.Cpu.Image) ? "/images/components/cpu-default.png" : Model.Cpu.Image)" class="component-img" alt="CPU">
+                </div>
+                <div class="col-md-7 col-sm-6">
+                    <h5 class="text-cyan">Processor (CPU)</h5>
+                    <p class="mb-0">@Model.Cpu.Brand @Model.Cpu.Model</p>
+                    <p class="text-muted small">Socket: @Model.Cpu.SocketType</p>
+                </div>
+                <div class="col-md-3 col-sm-3 text-end">
+                    <span class="text-neon fw-bold">@string.Format("{0:C2}", Model.Cpu.Price)</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="cyber-card p-4 mb-4">
+            <div class="row align-items-center">
+                <div class="col-md-2 col-sm-3 text-center">
+                    <img src="@(string.IsNullOrEmpty(Model.Motherboard.Image) ? "/images/components/motherboard-default.png" : Model.Motherboard.Image)" class="component-img" alt="Motherboard">
+                </div>
+                <div class="col-md-7 col-sm-6">
+                    <h5 class="text-cyan">Motherboard</h5>
+                    <p class="mb-0">@Model.Motherboard.Brand @Model.Motherboard.Model</p>
+                    <p class="text-muted small">Socket: @Model.Motherboard.SocketType | Form Factor: @Model.Motherboard.FormFactor</p>
+                </div>
+                <div class="col-md-3 col-sm-3 text-end">
+                    <span class="text-neon fw-bold">@string.Format("{0:C2}", Model.Motherboard.Price)</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="cyber-card p-4 mb-4">
+            <div class="row align-items-center">
+                <div class="col-md-2 col-sm-3 text-center">
+                    <img src="@(string.IsNullOrEmpty(Model.Gpu.Image) ? "/images/components/gpu-default.png" : Model.Gpu.Image)" class="component-img" alt="GPU">
+                </div>
+                <div class="col-md-7 col-sm-6">
+                    <h5 class="text-cyan">Graphics Card (GPU)</h5>
+                    <p class="mb-0">@Model.Gpu.Brand @Model.Gpu.Model</p>
+                    <p class="text-muted small">@Model.Gpu.Memory GB | Power Consumption: @Model.Gpu.PowerConsumption W</p>
+                </div>
+                <div class="col-md-3 col-sm-3 text-end">
+                    <span class="text-neon fw-bold">@string.Format("{0:C2}", Model.Gpu.Price)</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="cyber-card p-4 mb-4">
+            <div class="row align-items-center">
+                <div class="col-md-2 col-sm-3 text-center">
+                    <img src="@(string.IsNullOrEmpty(Model.Ram.Image) ? "/images/components/ram-default.png" : Model.Ram.Image)" class="component-img" alt="RAM">
+                </div>
+                <div class="col-md-7 col-sm-6">
+                    <h5 class="text-cyan">Memory (RAM)</h5>
+                    <p class="mb-0">@Model.Ram.Model</p>
+                    <p class="text-muted small">@Model.Ram.MemorySize GB @Model.Ram.MemoryType</p>
+                </div>
+                <div class="col-md-3 col-sm-3 text-end">
+                    <span class="text-neon fw-bold">@string.Format("{0:C2}", Model.Ram.Price)</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="cyber-card p-4 mb-4">
+            <div class="row align-items-center">
+                <div class="col-md-2 col-sm-3 text-center">
+                    <img src="@(string.IsNullOrEmpty(Model.Ssd.Image) ? "/images/components/ssd-default.png" : Model.Ssd.Image)" class="component-img" alt="SSD">
+                </div>
+                <div class="col-md-7 col-sm-6">
+                    <h5 class="text-cyan">Storage</h5>
+                    <p class="mb-0">@Model.Ssd.Model</p>
+                    <p class="text-muted small">@Model.Ssd.Storage GB NVMe SSD</p>
+                </div>
+                <div class="col-md-3 col-sm-3 text-end">
+                    <span class="text-neon fw-bold">@string.Format("{0:C2}", Model.Ssd.Price)</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="cyber-card p-4 mb-4">
+            <div class="row align-items-center">
+                <div class="col-md-2 col-sm-3 text-center">
+                    <img src="@(string.IsNullOrEmpty(Model.Cooler.Image) ? "/images/components/cooler-default.png" : Model.Cooler.Image)" class="component-img" alt="Cooler">
+                </div>
+                <div class="col-md-7 col-sm-6">
+                    <h5 class="text-cyan">CPU Cooler</h5>
+                    <p class="mb-0">@Model.Cooler.Model</p>
+                    <p class="text-muted small">@(Model.Cooler.Aio == true ? "Liquid Cooling (AIO)" : "Air Cooling")</p>
+                </div>
+                <div class="col-md-3 col-sm-3 text-end">
+                    <span class="text-neon fw-bold">@string.Format("{0:C2}", Model.Cooler.Price)</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="cyber-card p-4 mb-4">
+            <div class="row align-items-center">
+                <div class="col-md-2 col-sm-3 text-center">
+                    <img src="@(string.IsNullOrEmpty(Model.Psu.Image) ? "/images/components/psu-default.png" : Model.Psu.Image)" class="component-img" alt="PSU">
+                </div>
+                <div class="col-md-7 col-sm-6">
+                    <h5 class="text-cyan">Power Supply (PSU)</h5>
+                    <p class="mb-0">@Model.Psu.Model</p>
+                    <p class="text-muted small">@Model.Psu.Wattage W | @Model.Psu.Rating Rating</p>
+                </div>
+                <div class="col-md-3 col-sm-3 text-end">
+                    <span class="text-neon fw-bold">@string.Format("{0:C2}", Model.Psu.Price)</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="cyber-card p-4 mb-4">
+            <div class="row align-items-center">
+                <div class="col-md-2 col-sm-3 text-center">
+                    <img src="@(string.IsNullOrEmpty(Model.Case.Image) ? "/images/components/case-default.png" : Model.Case.Image)" class="component-img" alt="Case">
+                </div>
+                <div class="col-md-7 col-sm-6">
+                    <h5 class="text-cyan">Computer Case</h5>
+                    <p class="mb-0">@Model.Case.Model</p>
+                    <p class="text-muted small">Size: @Model.Case.Size | Color: @Model.Case.Color</p>
+                </div>
+                <div class="col-md-3 col-sm-3 text-end">
+                    <span class="text-neon fw-bold">@string.Format("{0:C2}", Model.Case.Price)</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center mt-4 gap-3">
+            <a href="@Url.Action("SystemBuilder", "Home")" class="btn btn-outline-neon"><i class="fas fa-arrow-left"></i> Start Over</a>
+            <div class="d-flex flex-column flex-md-row align-items-md-center">
+                <span class="me-md-3 mb-2 mb-md-0 fs-5">Total: <span class="text-neon fw-bold">@Model.TotalPrice.ToString("C2")</span></span>
+                <button class="btn btn-neon" id="addToCartBtn"><i class="fas fa-shopping-cart"></i> Add to Cart</button>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+    /* Custom styles for the cyberpunk-inspired system builder */
+    :root {
+        --neon-pink: #ff00ff;
+        --neon-blue: #00ffff;
+        --neon-purple: #8a2be2;
+        --dark-purple: #1a1025;
+        --darkest: #0d0714;
+        --card-bg: #1e1636;
+    }
+
+    body {
+        background-color: var(--darkest);
+        color: #ffffff;
+    }
+
+    .hero-section {
+        background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('/images/motherboard-bg.jpg');
+        background-size: cover;
+        background-position: center;
+        position: relative;
+        overflow: hidden;
+    }
+
+        .hero-section::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(136, 0, 255, 0.3), rgba(0, 255, 255, 0.3));
+            z-index: -1;
+        }
+
+    .glow-text {
+        color: white;
+        text-shadow: 0 0 10px rgba(255, 0, 255, 0.7), 0 0 20px rgba(255, 0, 255, 0.5);
+    }
+
+    .text-neon {
+        color: var(--neon-pink);
+    }
+
+    .text-cyan {
+        color: var(--neon-blue);
+    }
+
+    /* Badge styles */
+    .bg-neon {
+        background-color: var(--neon-pink);
+    }
+
+    .bg-purple {
+        background-color: var(--neon-purple);
+        color: #fff;
+    }
+
+    .bg-cyan {
+        background-color: var(--neon-blue);
+    }
+
+    .btn-neon {
+        background: var(--neon-pink);
+        border-color: var(--neon-pink);
+        color: #fff;
+        text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
+        box-shadow: 0 0 10px rgba(255, 0, 255, 0.7);
+        transition: all 0.3s ease;
+    }
+
+        .btn-neon:hover {
+            background: #ff33ff;
+            box-shadow: 0 0 20px rgba(255, 0, 255, 0.9);
+            transform: translateY(-2px);
+            color: #fff;
+        }
+
+    .btn-outline-neon {
+        color: var(--neon-pink);
+        border-color: var(--neon-pink);
+        background: transparent;
+        transition: all 0.3s;
+    }
+
+        .btn-outline-neon:hover {
+            background-color: var(--neon-pink);
+            color: #fff;
+            box-shadow: 0 0 10px rgba(255, 0, 255, 0.7);
+        }
+
+    .bg-dark-purple {
+        background-color: var(--dark-purple);
+    }
+
+    .cyber-card {
+        background-color: var(--card-bg);
+        border: 1px solid rgba(138, 43, 226, 0.3);
+        box-shadow: 0 0 15px rgba(138, 43, 226, 0.2);
+        border-radius: 8px;
+        overflow: hidden;
+    }
+
+    /* Component image style */
+    .component-img {
+        max-width: 100%;
+        height: auto;
+        max-height: 80px;
+        object-fit: contain;
+    }
+
+    /* Build preview image */
+    .build-preview {
+        max-height: 250px;
+        object-fit: contain;
+    }
+
+    /* Cyber list styles */
+    .cyber-list .list-group-item {
+        background-color: rgba(30, 22, 54, 0.8);
+        border: 1px solid rgba(138, 43, 226, 0.3);
+        color: #fff;
+        margin-bottom: 5px;
+    }
+
+    .step {
+        display: none;
+        padding: 20px;
+    }
+
+        .step.active {
+            display: block;
+        }
+
+    .custom-radio {
+        margin-bottom: 1rem;
+    }
+
+        .custom-radio .cyber-label {
+            background-color: rgba(30, 22, 54, 0.8);
+            border: 1px solid rgba(138, 43, 226, 0.3);
+            border-radius: 6px;
+            padding: 15px;
+            display: block;
+            width: 100%;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .custom-radio .form-check-input {
+            position: absolute;
+            opacity: 0;
+        }
+
+            .custom-radio .form-check-input:checked + .cyber-label {
+                background-color: rgba(255, 0, 255, 0.15);
+                border-color: var(--neon-pink);
+                box-shadow: 0 0 10px rgba(255, 0, 255, 0.4);
+            }
+
+    .form-select, .form-control {
+        background-color: rgba(30, 22, 54, 0.8);
+        border: 1px solid rgba(138, 43, 226, 0.3);
+        color: #fff;
+    }
+
+        .form-select:focus, .form-control:focus {
+            background-color: rgba(30, 22, 54, 0.8);
+            border-color: var(--neon-pink);
+            box-shadow: 0 0 10px rgba(255, 0, 255, 0.4);
+            color: #fff;
+        }
+
+    /* Responsive adjustments */
+    @@media (max-width: 767px) {
+        .component-img
+
+    {
+        max-height: 60px;
+    }
+
+    }
+</style>
+
+<script>
+    // Simple script to handle button clicks
+    document.addEventListener('DOMContentLoaded', function() {
+        // Save build button
+        const saveBuildBtn = document.getElementById('saveBuildBtn');
+        if (saveBuildBtn) {
+            saveBuildBtn.addEventListener('click', function() {
+                // Here you would implement the save functionality
+                alert('Build saved successfully!');
+            });
+        }
+
+        // Add to cart button
+        const addToCartBtn = document.getElementById('addToCartBtn');
+        if (addToCartBtn) {
+            addToCartBtn.addEventListener('click', function() {
+                // Here you would implement add to cart functionality
+                alert('Build added to cart!');
+            });
+        }
+    });
+</script>

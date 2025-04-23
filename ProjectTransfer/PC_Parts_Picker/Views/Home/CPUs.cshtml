@@ -1,0 +1,274 @@
+﻿@model List<Data.Data.Cpu>
+@{
+    ViewData["Title"] = "CPUs";
+}
+
+<!-- Hero Section -->
+<section class="hero-section text-white py-5">
+    <div class="container text-center py-5">
+        <h1 class="display-4 fw-bold mb-4 glow-text">CPUs</h1>
+        <p class="lead mb-4">Browse our selection of high-performance processors from top brands.</p>
+    </div>
+</section>
+
+<!-- Filter Section -->
+<section class="py-4 bg-dark-purple">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3 mb-3">
+                <div class="cyber-filter">
+                    <label for="brandFilter" class="form-label text-light">Brand</label>
+                    <select id="brandFilter" class="form-select">
+                        <option value="">All Brands</option>
+                        <option value="AMD">AMD</option>
+                        <option value="Intel">Intel</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-3 mb-3">
+                <div class="cyber-filter">
+                    <label for="socketFilter" class="form-label text-light">Socket</label>
+                    <select id="socketFilter" class="form-select">
+                        <option value="">All Sockets</option>
+                        <option value="AM4">AM4</option>
+                        <option value="AM5">AM5</option>
+                        <option value="Intel 1700">Intel 1700</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-3 mb-3">
+                <div class="cyber-filter">
+                    <label for="priceFilter" class="form-label text-light">Max Price</label>
+                    <select id="priceFilter" class="form-select">
+                        <option value="">Any Price</option>
+                        <option value="200">Under 200 lv.</option>
+                        <option value="300">Under 300 lv.</option>
+                        <option value="500">Under 500 lv.</option>
+                        <option value="1000">Under 1000 lv.</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-3 mb-3 d-flex align-items-end">
+                <button id="applyFilters" class="btn btn-neon w-100">Apply Filters</button>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CPU Listings -->
+<section class="py-5 bg-darkest">
+    <div class="container">
+        <div class="cyber-table-container">
+            <table class="table cyber-table" id="cpuTable">
+                <thead>
+                    <tr>
+                        <th scope="col" class="text-center">Image</th>
+                        <th scope="col">Brand</th>
+                        <th scope="col">Model</th>
+                        <th scope="col">Socket</th>
+                        <th scope="col" class="text-end">Price</th>
+                        <th scope="col" class="text-center">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var cpu in Model)
+                    {
+                        <tr data-brand="@cpu.Brand" data-socket="@cpu.SocketType" data-price="@cpu.Price">
+                            <td class="text-center">
+                                <div class="component-img-container">
+                                    @if (!string.IsNullOrEmpty(cpu.Image))
+                                    {
+                                        <img src="@cpu.Image" alt="@cpu.Model" class="component-img">
+                                    }
+                                    else
+                                    {
+                                        <img src="/images/placeholder-cpu.png" alt="@cpu.Model" class="component-img">
+                                    }
+                                </div>
+                            </td>
+                            <td>@cpu.Brand</td>
+                            <td>@cpu.Model</td>
+                            <td>@cpu.SocketType</td>
+                            <td class="text-end">@(cpu.Price.HasValue ? $"{cpu.Price:F2} lv." : "N/A")</td>
+                            <td class="text-center">
+                                <button class="btn btn-sm btn-outline-neon add-to-build" data-id="@cpu.Id">Add to Build</button>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $('#applyFilters').click(function () {
+                const brandFilter = $('#brandFilter').val();
+                const socketFilter = $('#socketFilter').val();
+                const priceFilter = parseFloat($('#priceFilter').val()) || Number.MAX_VALUE;
+
+                $('#cpuTable tbody tr').each(function () {
+                    const brand = $(this).data('brand');
+                    const socket = $(this).data('socket');
+                    const price = parseFloat($(this).data('price')) || 0;
+
+                    const brandMatch = !brandFilter || brand === brandFilter;
+                    const socketMatch = !socketFilter || socket === socketFilter;
+                    const priceMatch = price <= priceFilter;
+
+                    if (brandMatch && socketMatch && priceMatch) {
+                        $(this).show();
+                    } else {
+                        $(this).hide();
+                    }
+                });
+            });
+
+            $('.add-to-build').click(function () {
+                const cpuId = $(this).data('id');
+                // TODO: Implement add to build functionality
+                alert('Added CPU ID ' + cpuId + ' to your build');
+            });
+        });
+    </script>
+
+    <style>
+        /* Custom styles for component listings */
+        :root {
+            --neon-pink: #ff00ff;
+            --neon-blue: #00ffff;
+            --neon-purple: #8a2be2;
+            --dark-purple: #1a1025;
+            --darkest: #0d0714;
+            --card-bg: #1e1636;
+        }
+
+        body {
+            background-color: var(--darkest);
+            color: #ffffff;
+        }
+
+        .hero-section {
+            background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('/images/CPU.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            min-height: 75vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .glow-text {
+            color: white;
+            text-shadow: 0 0 10px rgba(255, 0, 255, 0.7), 0 0 20px rgba(255, 0, 255, 0.5);
+        }
+
+        .bg-dark-purple {
+            background-color: var(--dark-purple);
+        }
+
+        .bg-darkest {
+            background-color: var(--darkest);
+        }
+
+        .cyber-table-container {
+            background-color: var(--card-bg);
+            border-radius: 8px;
+            padding: 1rem;
+            border: 1px solid rgba(138, 43, 226, 0.3);
+            box-shadow: 0 0 15px rgba(138, 43, 226, 0.2);
+        }
+
+        .cyber-table {
+            color: #fff;
+            margin-bottom: 0;
+        }
+
+            .cyber-table thead th {
+                border-bottom: 2px solid var(--neon-purple);
+                color: var(--neon-blue);
+                font-family: 'Orbitron', sans-serif;
+                padding: 1rem 0.75rem;
+                background-color: rgba(26, 16, 37, 0.8);
+            }
+
+            .cyber-table tbody tr {
+                border-bottom: 1px solid rgba(138, 43, 226, 0.3);
+                transition: all 0.2s;
+            }
+
+                .cyber-table tbody tr:hover {
+                    background-color: rgba(138, 43, 226, 0.1);
+                }
+
+            .cyber-table tbody td {
+                padding: 1rem 0.75rem;
+                vertical-align: middle;
+            }
+
+        .component-img-container {
+            width: 80px;
+            height: 60px;
+            overflow: hidden;
+            margin: 0 auto;
+        }
+
+        .component-img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .cyber-filter label {
+            color: var(--neon-blue);
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        .cyber-filter select {
+            background-color: rgba(26, 16, 37, 0.8);
+            border: 1px solid var(--neon-purple);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+        }
+
+            .cyber-filter select:focus {
+                box-shadow: 0 0 0 0.25rem rgba(255, 0, 255, 0.25);
+                border-color: var(--neon-pink);
+            }
+
+        .btn-neon {
+            background: var(--neon-pink);
+            border-color: var(--neon-pink);
+            color: #fff;
+            text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
+            box-shadow: 0 0 10px rgba(255, 0, 255, 0.7);
+            transition: all 0.3s ease;
+        }
+
+            .btn-neon:hover {
+                background: #ff33ff;
+                box-shadow: 0 0 20px rgba(255, 0, 255, 0.9);
+                transform: translateY(-2px);
+                color: #fff;
+            }
+
+        .btn-outline-neon {
+            color: var(--neon-pink);
+            border-color: var(--neon-pink);
+            background: transparent;
+            transition: all 0.3s;
+        }
+
+            .btn-outline-neon:hover {
+                background-color: var(--neon-pink);
+                color: #fff;
+                box-shadow: 0 0 10px rgba(255, 0, 255, 0.7);
+            }
+    </style>
+}

@@ -1,0 +1,277 @@
+﻿@{
+    ViewData["Title"] = "Home";
+}
+
+<!-- Hero Section with Background Image -->
+<section class="hero-section text-white py-5">
+    <div class="container text-center py-5">
+        <h1 class="display-4 fw-bold mb-4 glow-text">Build Your Dream PC</h1>
+        <p class="lead mb-4">Design your custom PC with our easy-to-use PC Builder tool. Compare parts, check compatibility, and find the best prices.</p>
+        <a href="@Url.Action("SystemBuilder", "Home")" class="btn btn-neon btn-lg px-4 py-2 fw-bold">Start Building Now</a>
+    </div>
+</section>
+
+<!-- Features Section -->
+<section class="py-5 bg-dark-purple">
+    <div class="container">
+        <h2 class="text-center text-neon mb-5">Why Choose PC Builder</h2>
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="card h-100 cyber-card border-0">
+                    <div class="card-body text-center p-4">
+                        <div class="display-4 text-neon mb-3">
+                            <i class="fas fa-cogs"></i>
+                        </div>
+                        <h3 class="card-title h5 mb-3 text-cyan">Compatibility Check</h3>
+                        <p class="card-text text-light">Our system automatically checks compatibility between components to ensure your build works flawlessly.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card h-100 cyber-card border-0">
+                    <div class="card-body text-center p-4">
+                        <div class="display-4 text-neon mb-3">
+                            <i class="fas fa-question-circle"></i>
+                        </div>
+                        <h3 class="card-title h5 mb-3 text-cyan">Find Your Perfect PC Build</h3>
+                        <p class="card-text text-light">With a few questions our software can find the perfect configuration for your needs.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card h-100 cyber-card border-0">
+                    <div class="card-body text-center p-4">
+                        <div class="display-4 text-neon mb-3">
+                            <i class="fas fa-wrench"></i>
+                        </div>
+                        <h3 class="card-title h5 mb-3 text-cyan">Easy To Use</h3>
+                        <p class="card-text text-light">Our intuitive interface makes building a PC simple for both beginners and experienced builders.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Completed Builds Section -->
+<section class="py-5 bg-darkest">
+    <div class="container">
+        <h2 class="text-center text-neon mb-5">Completed Builds</h2>
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="card h-100 cyber-card">
+                    <div class="card-img-container">
+                        <img src="https://nzxt.com/assets/cms/34299/1672294215-h9-elite-hero-white.png?auto=format&dpr=1.5&fit=crop&h=1000&w=1000" class="card-img-top p-3" alt="Gaming PC Build">
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title text-cyan">Ultimate Gaming Rig</h5>
+                        <div class="mb-3">
+                            <span class="badge bg-neon text-dark">Gaming</span>
+                            <span class="badge bg-purple">High-End</span>
+                        </div>
+                        <ul class="list-unstyled text-light">
+                            <li><strong class="text-cyan">CPU:</strong> AMD Ryzen 7 9800X3D</li>
+                            <li><strong class="text-cyan">GPU:</strong> NVIDIA RTX 5080</li>
+                            <li><strong class="text-cyan">RAM:</strong> 64GB DDR5 6000MHz</li>
+                            <li><strong class="text-cyan">Storage:</strong> 4TB NVMe SSD</li>
+                        </ul>
+                        <div class="d-flex justify-content-between align-items-center mt-3">
+                            <span class="text-neon fw-bold fs-5">7,499.99 lv.</span>
+                            <a href="#" class="btn btn-outline-neon">View Build</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card h-100 cyber-card">
+                    <div class="card-img-container">
+                        <img src="https://www.gigabyte.com/FileUpload/Global/KeyFeature/2438/innergigabyteimages/kfimg.png" class="card-img-top p-3" alt="Productivity PC Build">
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title text-cyan">Content Creator Workstation</h5>
+                        <div class="mb-3">
+                            <span class="badge bg-neon text-dark">Productivity</span>
+                            <span class="badge bg-purple">Mid-Range</span>
+                        </div>
+                        <ul class="list-unstyled text-light">
+                            <li><strong class="text-cyan">CPU:</strong> AMD Ryzen 7 9700X</li>
+                            <li><strong class="text-cyan">GPU:</strong> AMD Radeon RX 7700 XT</li>
+                            <li><strong class="text-cyan">RAM:</strong> 32GB DDR5 6000MHz</li>
+                            <li><strong class="text-cyan">Storage:</strong> 2TB NVMe SSD</li>
+                        </ul>
+                        <div class="d-flex justify-content-between align-items-center mt-3">
+                            <span class="text-neon fw-bold fs-5">3,499.99 lv.</span>
+                            <a href="#" class="btn btn-outline-neon">View Build</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card h-100 cyber-card">
+                    <div class="card-img-container">
+                        <img src="https://www.gigabyte.com/Image/2dba095bef949f1ed34afd488c982492/Product/40201/webp/2000" class="card-img-top p-3" alt="Budget PC Build">
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title text-cyan">Budget Gaming PC</h5>
+                        <div class="mb-3">
+                            <span class="badge bg-neon text-dark">Gaming</span>
+                            <span class="badge bg-purple">Budget</span>
+                        </div>
+                        <ul class="list-unstyled text-light">
+                            <li><strong class="text-cyan">CPU:</strong> AMD Ryzen 5 5600X</li>
+                            <li><strong class="text-cyan">GPU:</strong> AMD Radeon RX 7600</li>
+                            <li><strong class="text-cyan">RAM:</strong> 16GB DDR4 3600MHz</li>
+                            <li><strong class="text-cyan">Storage:</strong> 1TB NVMe SSD</li>
+                        </ul>
+                        <div class="d-flex justify-content-between align-items-center mt-3">
+                            <span class="text-neon fw-bold fs-5">1,799.99 lv.</span>
+                            <a href="#" class="btn btn-outline-neon">View Build</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@section Scripts {
+    <style>
+        /* Custom styles for the cyberpunk-inspired design */
+        :root {
+            --neon-pink: #ff00ff;
+            --neon-blue: #00ffff;
+            --neon-purple: #8a2be2;
+            --dark-purple: #1a1025;
+            --darkest: #0d0714;
+            --card-bg: #1e1636;
+        }
+
+        body {
+            background-color: var(--darkest);
+            color: #ffffff;
+        }
+
+        .hero-section {
+            background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('/images/motherboard-bg.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            min-height: 75vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+            .hero-section::after {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: linear-gradient(135deg, rgba(136, 0, 255, 0.3), rgba(0, 255, 255, 0.3));
+                z-index: -1;
+            }
+
+        .glow-text {
+            color: white;
+            text-shadow: 0 0 10px rgba(255, 0, 255, 0.7), 0 0 20px rgba(255, 0, 255, 0.5);
+        }
+
+        .text-neon {
+            color: var(--neon-pink);
+        }
+
+        .text-cyan {
+            color: var(--neon-blue);
+        }
+
+        .btn-neon {
+            background: var(--neon-pink);
+            border-color: var(--neon-pink);
+            color: #fff;
+            text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
+            box-shadow: 0 0 10px rgba(255, 0, 255, 0.7);
+            transition: all 0.3s ease;
+        }
+
+            .btn-neon:hover {
+                background: #ff33ff;
+                box-shadow: 0 0 20px rgba(255, 0, 255, 0.9);
+                transform: translateY(-2px);
+                color: #fff;
+            }
+
+        .btn-outline-neon {
+            color: var(--neon-pink);
+            border-color: var(--neon-pink);
+            background: transparent;
+            transition: all 0.3s;
+        }
+
+            .btn-outline-neon:hover {
+                background-color: var(--neon-pink);
+                color: #fff;
+                box-shadow: 0 0 10px rgba(255, 0, 255, 0.7);
+            }
+
+        .bg-dark-purple {
+            background-color: var(--dark-purple);
+        }
+
+        .bg-darkest {
+            background-color: var(--darkest);
+        }
+
+        .bg-neon {
+            background-color: var(--neon-pink);
+        }
+
+        .bg-purple {
+            background-color: var(--neon-purple);
+        }
+
+        .cyber-card {
+            background-color: var(--card-bg);
+            border: 1px solid rgba(138, 43, 226, 0.3);
+            box-shadow: 0 0 15px rgba(138, 43, 226, 0.2);
+            transition: transform 0.3s, box-shadow 0.3s;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+            .cyber-card:hover {
+                transform: translateY(-10px);
+                box-shadow: 0 0 25px rgba(255, 0, 255, 0.4);
+            }
+
+        .card-img-container {
+            background: linear-gradient(135deg, #1e1636, #2a1c4a);
+            padding: 1rem;
+            border-bottom: 1px solid rgba(138, 43, 226, 0.3);
+        }
+
+        .card-img-top {
+            height: 200px;
+            object-fit: contain;
+            background: transparent;
+        }
+
+        .badge {
+            padding: 0.5em 0.8em;
+            margin-right: 0.3rem;
+            border-radius: 4px;
+        }
+
+    @* Using escaped @ symbol for media query *@
+        @@media (max-width: 768px) {
+            .hero-section
+
+        {
+            min-height: 60vh;
+        }
+
+        }
+    </style>
+}

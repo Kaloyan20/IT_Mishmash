@@ -1,0 +1,413 @@
+﻿@{
+    ViewData["Title"] = "System Builder";
+}
+
+<section class="hero-section text-white py-4">
+    <div class="container text-center py-4">
+        <h1 class="display-5 fw-bold mb-4 glow-text">PC System Builder</h1>
+        <p class="lead mb-4">Answer a few questions about your needs and we'll recommend the perfect PC build for you.</p>
+    </div>
+</section>
+
+<section class="py-5 bg-dark-purple">
+    <div class="container">
+        <div class="cyber-card p-4 mb-5">
+            <form id="builderForm" method="post" asp-action="BuildResult">
+                <div class="step active" id="step1">
+                    <h3 class="text-cyan mb-4">Step 1: What will you primarily use this PC for?</h3>
+                    <div class="row g-4">
+                        <div class="col-md-4">
+                            <div class="form-check custom-radio">
+                                <input class="form-check-input" type="radio" name="Usage" id="gaming" value="Gaming" required>
+                                <label class="form-check-label cyber-label" for="gaming">
+                                    <i class="fas fa-gamepad text-neon me-2"></i>
+                                    Gaming
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-check custom-radio">
+                                <input class="form-check-input" type="radio" name="Usage" id="productivity" value="Productivity">
+                                <label class="form-check-label cyber-label" for="productivity">
+                                    <i class="fas fa-laptop-code text-neon me-2"></i>
+                                    Productivity/Work
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-check custom-radio">
+                                <input class="form-check-input" type="radio" name="Usage" id="contentCreation" value="ContentCreation">
+                                <label class="form-check-label cyber-label" for="contentCreation">
+                                    <i class="fas fa-photo-video text-neon me-2"></i>
+                                    Content Creation
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="d-flex justify-content-end mt-4">
+                        <button type="button" class="btn btn-neon next-step">Next <i class="fas fa-chevron-right"></i></button>
+                    </div>
+                </div>
+
+                <div class="step" id="step2">
+                    <h3 class="text-cyan mb-4">Step 2: What's your budget range?</h3>
+                    <div class="row g-4">
+                        <div class="col-md-3">
+                            <div class="form-check custom-radio">
+                                <input class="form-check-input" type="radio" name="Budget" id="budget" value="Budget" required>
+                                <label class="form-check-label cyber-label" for="budget">
+                                    <i class="fas fa-coins text-neon me-2"></i>
+                                    Budget (Under 2,000 lv.)
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-check custom-radio">
+                                <input class="form-check-input" type="radio" name="Budget" id="midRange" value="MidRange">
+                                <label class="form-check-label cyber-label" for="midRange">
+                                    <i class="fas fa-money-bill text-neon me-2"></i>
+                                    Mid-Range (2,000-4,000 lv.)
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-check custom-radio">
+                                <input class="form-check-input" type="radio" name="Budget" id="highEnd" value="HighEnd">
+                                <label class="form-check-label cyber-label" for="highEnd">
+                                    <i class="fas fa-gem text-neon me-2"></i>
+                                    High-End (4,000-6,000 lv.)
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-check custom-radio">
+                                <input class="form-check-input" type="radio" name="Budget" id="extreme" value="Extreme">
+                                <label class="form-check-label cyber-label" for="extreme">
+                                    <i class="fas fa-rocket text-neon me-2"></i>
+                                    Extreme (6,000+ lv.)
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="d-flex justify-content-between mt-4">
+                        <button type="button" class="btn btn-outline-neon prev-step"><i class="fas fa-chevron-left"></i> Back</button>
+                        <button type="button" class="btn btn-neon next-step">Next <i class="fas fa-chevron-right"></i></button>
+                    </div>
+                </div>
+
+                <div class="step" id="step3">
+                    <h3 class="text-cyan mb-4">Step 3: Size Preference</h3>
+                    <div class="row g-4">
+                        <div class="col-md-4">
+                            <div class="form-check custom-radio">
+                                <input class="form-check-input" type="radio" name="Size" id="sffpc" value="Small" required>
+                                <label class="form-check-label cyber-label" for="sffpc">
+                                    <i class="fas fa-box text-neon me-2"></i>
+                                    Small Form Factor
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-check custom-radio">
+                                <input class="form-check-input" type="radio" name="Size" id="midTower" value="Mid">
+                                <label class="form-check-label cyber-label" for="midTower">
+                                    <i class="fas fa-desktop text-neon me-2"></i>
+                                    Mid Tower
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-check custom-radio">
+                                <input class="form-check-input" type="radio" name="Size" id="fullTower" value="Full">
+                                <label class="form-check-label cyber-label" for="fullTower">
+                                    <i class="fas fa-server text-neon me-2"></i>
+                                    Full Tower
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="d-flex justify-content-between mt-4">
+                        <button type="button" class="btn btn-outline-neon prev-step"><i class="fas fa-chevron-left"></i> Back</button>
+                        <button type="button" class="btn btn-neon next-step">Next <i class="fas fa-chevron-right"></i></button>
+                    </div>
+                </div>
+
+                <div class="step" id="step4">
+                    <h3 class="text-cyan mb-4">Step 4: Additional Preferences</h3>
+                    <div class="row g-4">
+                        <div class="col-md-6">
+                            <div class="form-group mb-3">
+                                <label class="text-cyan mb-2">Preferred CPU Brand</label>
+                                <div class="d-flex">
+                                    <div class="form-check me-4">
+                                        <input class="form-check-input" type="radio" name="CpuBrand" id="amd" value="AMD" required>
+                                        <label class="form-check-label" for="amd">AMD</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="CpuBrand" id="intel" value="Intel">
+                                        <label class="form-check-label" for="intel">Intel</label>
+                                    </div>
+                                    <div class="form-check ms-4">
+                                        <input class="form-check-input" type="radio" name="CpuBrand" id="cpuNoPref" value="Any">
+                                        <label class="form-check-label" for="cpuNoPref">No Preference</label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group mb-3">
+                                <label class="text-cyan mb-2">Preferred GPU Brand</label>
+                                <div class="d-flex">
+                                    <div class="form-check me-4">
+                                        <input class="form-check-input" type="radio" name="GpuBrand" id="nvidia" value="NVIDIA" required>
+                                        <label class="form-check-label" for="nvidia">NVIDIA</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="GpuBrand" id="amdGpu" value="AMD">
+                                        <label class="form-check-label" for="amdGpu">AMD</label>
+                                    </div>
+                                    <div class="form-check ms-4">
+                                        <input class="form-check-input" type="radio" name="GpuBrand" id="gpuNoPref" value="Any">
+                                        <label class="form-check-label" for="gpuNoPref">No Preference</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-group mb-3">
+                                <label class="text-cyan mb-2">Cooling Preference</label>
+                                <div class="d-flex">
+                                    <div class="form-check me-4">
+                                        <input class="form-check-input" type="radio" name="Cooling" id="aircooling" value="Air" required>
+                                        <label class="form-check-label" for="aircooling">Air Cooling</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="Cooling" id="watercooling" value="AIO">
+                                        <label class="form-check-label" for="watercooling">Liquid Cooling (AIO)</label>
+                                    </div>
+                                    <div class="form-check ms-4">
+                                        <input class="form-check-input" type="radio" name="Cooling" id="coolNoPref" value="Any">
+                                        <label class="form-check-label" for="coolNoPref">No Preference</label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="colors" class="text-cyan mb-2">Color Scheme</label>
+                                <select class="form-select" id="colors" name="Color">
+                                    <option value="Any">No Preference</option>
+                                    <option value="Black">Black</option>
+                                    <option value="White">White</option>
+                                    <option value="RGB">RGB</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="d-flex justify-content-between mt-4">
+                        <button type="button" class="btn btn-outline-neon prev-step"><i class="fas fa-chevron-left"></i> Back</button>
+                        <button type="submit" class="btn btn-neon">Get My Build <i class="fas fa-bolt"></i></button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
+
+@section Scripts {
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const steps = document.querySelectorAll('.step');
+            const nextButtons = document.querySelectorAll('.next-step');
+            const prevButtons = document.querySelectorAll('.prev-step');
+
+            // Next button handler
+            nextButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    // Get current step
+                    const currentStep = this.closest('.step');
+                    const currentStepIndex = Array.from(steps).indexOf(currentStep);
+
+                    // Validate inputs before proceeding
+                    const inputs = currentStep.querySelectorAll('input[required]');
+                    let valid = true;
+
+                    inputs.forEach(input => {
+                        if (input.type === 'radio') {
+                            const radioGroup = document.querySelectorAll(`input[name="${input.name}"]`);
+                            const checked = Array.from(radioGroup).some(radio => radio.checked);
+                            if (!checked) valid = false;
+                        } else if (!input.value) {
+                            valid = false;
+                        }
+                    });
+
+                    if (!valid) {
+                        alert('Please complete all required fields before continuing.');
+                        return;
+                    }
+
+                    // Hide current step
+                    currentStep.classList.remove('active');
+
+                    // Show next step
+                    const nextStep = steps[currentStepIndex + 1];
+                    nextStep.classList.add('active');
+                });
+            });
+
+            // Previous button handler
+            prevButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    // Get current step
+                    const currentStep = this.closest('.step');
+                    const currentStepIndex = Array.from(steps).indexOf(currentStep);
+
+                    // Hide current step
+                    currentStep.classList.remove('active');
+
+                    // Show previous step
+                    const prevStep = steps[currentStepIndex - 1];
+                    prevStep.classList.add('active');
+                });
+            });
+        });
+    </script>
+
+    <style>
+        /* Custom styles for the cyberpunk-inspired system builder */
+        :root {
+            --neon-pink: #ff00ff;
+            --neon-blue: #00ffff;
+            --neon-purple: #8a2be2;
+            --dark-purple: #1a1025;
+            --darkest: #0d0714;
+            --card-bg: #1e1636;
+        }
+
+        body {
+            background-color: var(--darkest);
+            color: #ffffff;
+        }
+
+        .hero-section {
+            background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('/images/motherboard-bg.jpg');
+            background-size: cover;
+            background-position: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+            .hero-section::after {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: linear-gradient(135deg, rgba(136, 0, 255, 0.3), rgba(0, 255, 255, 0.3));
+                z-index: -1;
+            }
+
+        .glow-text {
+            color: white;
+            text-shadow: 0 0 10px rgba(255, 0, 255, 0.7), 0 0 20px rgba(255, 0, 255, 0.5);
+        }
+
+        .text-neon {
+            color: var(--neon-pink);
+        }
+
+        .text-cyan {
+            color: var(--neon-blue);
+        }
+
+        .btn-neon {
+            background: var(--neon-pink);
+            border-color: var(--neon-pink);
+            color: #fff;
+            text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
+            box-shadow: 0 0 10px rgba(255, 0, 255, 0.7);
+            transition: all 0.3s ease;
+        }
+
+            .btn-neon:hover {
+                background: #ff33ff;
+                box-shadow: 0 0 20px rgba(255, 0, 255, 0.9);
+                transform: translateY(-2px);
+                color: #fff;
+            }
+
+        .btn-outline-neon {
+            color: var(--neon-pink);
+            border-color: var(--neon-pink);
+            background: transparent;
+            transition: all 0.3s;
+        }
+
+            .btn-outline-neon:hover {
+                background-color: var(--neon-pink);
+                color: #fff;
+                box-shadow: 0 0 10px rgba(255, 0, 255, 0.7);
+            }
+
+        .bg-dark-purple {
+            background-color: var(--dark-purple);
+        }
+
+        .cyber-card {
+            background-color: var(--card-bg);
+            border: 1px solid rgba(138, 43, 226, 0.3);
+            box-shadow: 0 0 15px rgba(138, 43, 226, 0.2);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .step {
+            display: none;
+            padding: 20px;
+        }
+
+            .step.active {
+                display: block;
+            }
+
+        .custom-radio {
+            margin-bottom: 1rem;
+        }
+
+            .custom-radio .cyber-label {
+                background-color: rgba(30, 22, 54, 0.8);
+                border: 1px solid rgba(138, 43, 226, 0.3);
+                border-radius: 6px;
+                padding: 15px;
+                display: block;
+                width: 100%;
+                cursor: pointer;
+                transition: all 0.3s;
+            }
+
+            .custom-radio .form-check-input {
+                position: absolute;
+                opacity: 0;
+            }
+
+                .custom-radio .form-check-input:checked + .cyber-label {
+                    background-color: rgba(255, 0, 255, 0.15);
+                    border-color: var(--neon-pink);
+                    box-shadow: 0 0 10px rgba(255, 0, 255, 0.4);
+                }
+
+        .form-select, .form-control {
+            background-color: rgba(30, 22, 54, 0.8);
+            border: 1px solid rgba(138, 43, 226, 0.3);
+            color: #fff;
+        }
+
+            .form-select:focus, .form-control:focus {
+                background-color: rgba(30, 22, 54, 0.8);
+                border-color: var(--neon-pink);
+                box-shadow: 0 0 10px rgba(255, 0, 255, 0.4);
+                color: #fff;
+            }
+    </style>
+}

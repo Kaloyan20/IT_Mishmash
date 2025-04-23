@@ -1,0 +1,284 @@
+﻿@model List<Data.Data.Case>
+@{
+    ViewData["Title"] = "Cases";
+}
+
+<!-- Hero Section -->
+<section class="hero-section text-white py-5">
+    <div class="container text-center py-5">
+        <h1 class="display-4 fw-bold mb-4 glow-text">PC Cases</h1>
+        <p class="lead mb-4">Explore our premium selection of computer cases for your perfect build.</p>
+    </div>
+</section>
+
+<!-- Filter Section -->
+<section class="py-4 bg-dark-purple">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3 mb-3">
+                <div class="cyber-filter">
+                    <label for="sizeFilter" class="form-label text-light">Case Size</label>
+                    <select id="sizeFilter" class="form-select">
+                        <option value="">All Sizes</option>
+                        <option value="ATX">ATX</option>
+                        <option value="Micro ATX">Micro ATX</option>
+                        <option value="Mini ITX">Mini ITX</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-3 mb-3">
+                <div class="cyber-filter">
+                    <label for="aioFilter" class="form-label text-light">AIO Support</label>
+                    <select id="aioFilter" class="form-select">
+                        <option value="">All Cases</option>
+                        <option value="true">AIO Supported</option>
+                        <option value="false">No AIO Support</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-3 mb-3">
+                <div class="cyber-filter">
+                    <label for="colorFilter" class="form-label text-light">Color</label>
+                    <select id="colorFilter" class="form-select">
+                        <option value="">All Colors</option>
+                        <option value="Black">Black</option>
+                        <option value="White">White</option>
+                        <option value="Gray">Gray</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-3 mb-3 d-flex align-items-end">
+                <button id="applyFilters" class="btn btn-neon w-100">Apply Filters</button>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Cases Listings -->
+<section class="py-5 bg-darkest">
+    <div class="container">
+        <div class="cyber-table-container">
+            <table class="table cyber-table" id="casesTable">
+                <thead>
+                    <tr>
+                        <th scope="col" class="text-center">Image</th>
+                        <th scope="col">Model</th>
+                        <th scope="col">Size</th>
+                        <th scope="col">AIO Support</th>
+                        <th scope="col">Color</th>
+                        <th scope="col" class="text-end">Price</th>
+                        <th scope="col" class="text-center">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var pcCase in Model)
+                    {
+                        <tr data-size="@pcCase.Size"
+                            data-aio="@(pcCase.Aio.HasValue ? pcCase.Aio.Value.ToString().ToLower() : "")"
+                            data-color="@pcCase.Color"
+                            data-price="@pcCase.Price">
+                            <td class="text-center">
+                                <div class="component-img-container">
+                                    @if (!string.IsNullOrEmpty(pcCase.Image))
+                                    {
+                                        <img src="@pcCase.Image" alt="@pcCase.Model" class="component-img">
+                                    }
+                                    else
+                                    {
+                                        <img src="/images/placeholder-case.png" alt="@pcCase.Model" class="component-img">
+                                    }
+                                </div>
+                            </td>
+                            <td>@pcCase.Model</td>
+                            <td>@pcCase.Size</td>
+                            <td>@(pcCase.Aio.HasValue ? (pcCase.Aio.Value ? "Yes" : "No") : "N/A")</td>
+                            <td>@pcCase.Color</td>
+                            <td class="text-end">@(pcCase.Price.HasValue ? $"{pcCase.Price:F2} lv." : "N/A")</td>
+                            <td class="text-center">
+                                <button class="btn btn-sm btn-outline-neon add-to-build" data-id="@pcCase.Id">Add to Build</button>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $('#applyFilters').click(function () {
+                const sizeFilter = $('#sizeFilter').val();
+                const aioFilter = $('#aioFilter').val();
+                const colorFilter = $('#colorFilter').val();
+                const priceFilter = parseFloat($('#priceFilter').val()) || Number.MAX_VALUE;
+
+                $('#casesTable tbody tr').each(function () {
+                    const size = $(this).data('size');
+                    const aio = $(this).data('aio').toString();
+                    const color = $(this).data('color');
+                    const price = parseFloat($(this).data('price')) || 0;
+
+                    const sizeMatch = !sizeFilter || size === sizeFilter;
+                    const aioMatch = !aioFilter || aio === aioFilter;
+                    const colorMatch = !colorFilter || color === colorFilter;
+                    const priceMatch = price <= priceFilter;
+
+                    if (sizeMatch && aioMatch && colorMatch && priceMatch) {
+                        $(this).show();
+                    } else {
+                        $(this).hide();
+                    }
+                });
+            });
+
+            $('.add-to-build').click(function () {
+                const caseId = $(this).data('id');
+                // TODO: Implement add to build functionality
+                alert('Added Case ID ' + caseId + ' to your build');
+            });
+        });
+    </script>
+}
+
+<style>
+    /* Custom styles for component listings */
+    :root {
+        --neon-pink: #ff00ff;
+        --neon-blue: #00ffff;
+        --neon-purple: #8a2be2;
+        --dark-purple: #1a1025;
+        --darkest: #0d0714;
+        --card-bg: #1e1636;
+    }
+
+    body {
+        background-color: var(--darkest);
+        color: #ffffff;
+    }
+
+    .hero-section {
+        background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('/images/Case.jpeg');
+        background-size: cover;
+        background-position: center;
+        background-attachment: fixed;
+        min-height: 75vh;
+        display: flex;
+        align-items: center;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .glow-text {
+        color: white;
+        text-shadow: 0 0 10px rgba(255, 0, 255, 0.7), 0 0 20px rgba(255, 0, 255, 0.5);
+    }
+
+    .bg-dark-purple {
+        background-color: var(--dark-purple);
+    }
+
+    .bg-darkest {
+        background-color: var(--darkest);
+    }
+
+    .cyber-table-container {
+        background-color: var(--card-bg);
+        border-radius: 8px;
+        padding: 1rem;
+        border: 1px solid rgba(138, 43, 226, 0.3);
+        box-shadow: 0 0 15px rgba(138, 43, 226, 0.2);
+    }
+
+    .cyber-table {
+        color: #fff;
+        margin-bottom: 0;
+    }
+
+        .cyber-table thead th {
+            border-bottom: 2px solid var(--neon-purple);
+            color: var(--neon-blue);
+            font-family: 'Orbitron', sans-serif;
+            padding: 1rem 0.75rem;
+            background-color: rgba(26, 16, 37, 0.8);
+        }
+
+        .cyber-table tbody tr {
+            border-bottom: 1px solid rgba(138, 43, 226, 0.3);
+            transition: all 0.2s;
+        }
+
+            .cyber-table tbody tr:hover {
+                background-color: rgba(138, 43, 226, 0.1);
+            }
+
+        .cyber-table tbody td {
+            padding: 1rem 0.75rem;
+            vertical-align: middle;
+        }
+
+    .component-img-container {
+        width: 80px;
+        height: 60px;
+        overflow: hidden;
+        margin: 0 auto;
+    }
+
+    .component-img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+    }
+
+    .cyber-filter label {
+        color: var(--neon-blue);
+        margin-bottom: 0.5rem;
+        font-weight: 500;
+    }
+
+    .cyber-filter select {
+        background-color: rgba(26, 16, 37, 0.8);
+        border: 1px solid var(--neon-purple);
+        color: white;
+        padding: 0.5rem 1rem;
+        border-radius: 4px;
+    }
+
+        .cyber-filter select:focus {
+            box-shadow: 0 0 0 0.25rem rgba(255, 0, 255, 0.25);
+            border-color: var(--neon-pink);
+        }
+
+    .btn-neon {
+        background: var(--neon-pink);
+        border-color: var(--neon-pink);
+        color: #fff;
+        text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
+        box-shadow: 0 0 10px rgba(255, 0, 255, 0.7);
+        transition: all 0.3s ease;
+    }
+
+        .btn-neon:hover {
+            background: #ff33ff;
+            box-shadow: 0 0 20px rgba(255, 0, 255, 0.9);
+            transform: translateY(-2px);
+            color: #fff;
+        }
+
+    .btn-outline-neon {
+        color: var(--neon-pink);
+        border-color: var(--neon-pink);
+        background: transparent;
+        transition: all 0.3s;
+    }
+
+        .btn-outline-neon:hover {
+            background-color: var(--neon-pink);
+            color: #fff;
+            box-shadow: 0 0 10px rgba(255, 0, 255, 0.7);
+        }
+</style>
+}
+
+

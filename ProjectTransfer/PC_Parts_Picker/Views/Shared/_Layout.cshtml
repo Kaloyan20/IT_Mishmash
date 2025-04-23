@@ -1,0 +1,93 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - PC Builder</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/PC_Parts_Picker.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Orbitron:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body class="cyber-body">
+    <!-- Header -->
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-dark cyber-navbar">
+            <div class="container">
+                <a class="navbar-brand fw-bold cyber-brand" asp-area="" asp-controller="Home" asp-action="Index">PC <span class="text-neon">Builder</span></a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse d-lg-inline-flex justify-content-between">
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link cyber-nav-link" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link cyber-nav-link" asp-area="" asp-controller="Home" asp-action="SystemBuilder">System Builder</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link cyber-nav-link" asp-area="" asp-controller="Home" asp-action="Components">Components</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link cyber-nav-link" asp-area="" asp-controller="Home" asp-action="Editor">Editor</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        @RenderBody()
+    </main>
+
+    <!-- Footer -->
+    <footer class="cyber-footer text-white py-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3 mb-4">
+                    <h5 class="text-neon mb-3 footer-heading">PC Builder</h5>
+                    <p>Build your custom PC with ease using our powerful PC Builder tool.</p>
+                </div>
+                <div class="col-md-3 mb-4">
+                    <h5 class="text-neon mb-3 footer-heading">Quick Links</h5>
+                    <ul class="list-unstyled footer-links">
+                        <li class="mb-2"><a class="cyber-footer-link" asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
+                        <li class="mb-2"><a class="cyber-footer-link" asp-area="" asp-controller="Home" asp-action="SystemBuilder">System Builder</a></li>
+                        <li class="mb-2"><a class="cyber-footer-link" asp-area="" asp-controller="Home" asp-action="Components">Components</a></li>
+                        <li class="mb-2"><a class="cyber-footer-link" asp-area="" asp-controller="Home" asp-action="Editor">Editor</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-3 mb-4">
+                    <h5 class="text-neon mb-3 footer-heading">Components</h5>
+                    <ul class="list-unstyled footer-links">
+                        <li class="mb-2"><a class="cyber-footer-link" asp-area="" asp-controller="Home" asp-action="Cpus">Cpus</a></li>
+                        <li class="mb-2"><a class="cyber-footer-link" asp-area="" asp-controller="Home" asp-action="Motherboards">Motherboards</a></li>
+                        <li class="mb-2"><a class="cyber-footer-link" asp-area="" asp-controller="Home" asp-action="GPUs">Graphics Cards</a></li>
+                        <li class="mb-2"><a class="cyber-footer-link" asp-area="" asp-controller="Home" asp-action="Memory">Memory</a></li>
+                        <li class="mb-2"><a class="cyber-footer-link" asp-area="" asp-controller="Home" asp-action="Storage">Storage</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-3 mb-4">
+                    <h5 class="text-neon mb-3 footer-heading">Help & Support</h5>
+                    <ul class="list-unstyled footer-links">
+                        <li class="mb-2"><a class="cyber-footer-link" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy Policy</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-top border-neon-glow pt-4 mt-3 text-center">
+                &copy; 2025 - PC Builder - <a class="cyber-footer-link" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
