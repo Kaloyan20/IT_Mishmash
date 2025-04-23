@@ -17,8 +17,8 @@ public class HomeController : Controller
 
     public IActionResult Index()
     {
-        Services.PCService pcService = new Services.PCService();
-        pcService.CreatePC();
+        //Services.PCService pcService = new Services.PCService();
+        //pcService.CreatePC();
         return View();
     }
 
