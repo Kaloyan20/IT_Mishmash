@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 using Microsoft.EntityFrameworkCore;
 
 namespace Data.Data;
@@ -27,5 +28,6 @@ public partial class Cooler
 
     public double? Price { get; set; }
 
+    [JsonIgnore]
     public string? Image { get; set; }
 }

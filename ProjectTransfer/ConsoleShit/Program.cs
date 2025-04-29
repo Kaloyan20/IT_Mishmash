@@ -1,15 +1,11 @@
-﻿using LLama;
-using LLama.Common;
-using Services;
+﻿using Services;
 
-PCService pcService = new PCService();
+var service = new PCService();
 
-(InferenceParams inferenceParams, InteractiveExecutor executor) = pcService.InitializeModel(
-    pathToModel: PCService.PATH_TO_LLAMA,
-    contextSize: 2048,
-    gpuLayerCount: 20,
-    maxTokens: 1000,
-    antiPrompts: new List<string> { "exit" }
+await service.InitializeModel(
+    modelPath: PCService.PATH_TO_LLAMA,
+    contextSize: 1024,
+    gpuLayerCount: 5,
+    maxTokens: 256,
+    antiPrompts: new List<string> { "User:", "User:\n" }
 );
-
-await pcService.CreatePC(inferenceParams, executor);
