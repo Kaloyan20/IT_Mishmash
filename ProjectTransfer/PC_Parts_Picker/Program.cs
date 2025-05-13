@@ -1,13 +1,13 @@
 using Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using Services;
+//using Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
-builder.Services.AddScoped<PCService, PCService>();
+//builder.Services.AddScoped<PCService, PCService>();
 
 
 var connectionString =
