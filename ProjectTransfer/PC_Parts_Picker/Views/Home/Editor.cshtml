@@ -3,7 +3,7 @@
     ViewData["Title"] = "Admin Panel";
 }
 
-@if (!Model.IsAuthenticated)
+@if (!(Model.IsAuthenticated))
 {
     <!-- Password Entry Section -->
     <section class="password-section d-flex align-items-center justify-content-center min-vh-100">
@@ -12,7 +12,7 @@
                 <div class="col-md-6 col-lg-4">
                     <div class="cyber-card p-4 text-center">
                         <h2 class="text-cyan mb-4">Admin Access</h2>
-                        <form method="post" asp-action="AdminPanel">
+                        <form method="post" asp-action="Editor">
                             <div class="mb-3">
                                 <input type="password" name="password" class="form-control" placeholder="Enter admin password" required>
                             </div>
@@ -447,3 +447,4 @@ else
         </div>
     </div>
 }
+

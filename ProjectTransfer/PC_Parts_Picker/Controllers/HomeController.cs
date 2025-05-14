@@ -105,7 +105,7 @@ public class HomeController : Controller
 
     // Admin functionality
     [HttpGet]
-    public IActionResult Admin()
+    public IActionResult Editor()
     {
         var model = new AdminViewModel
         {
@@ -115,7 +115,7 @@ public class HomeController : Controller
     }
 
     [HttpPost]
-    public IActionResult Admin(string password, string action)
+    public IActionResult Editor(string password, string action)
     {
         if (action == "login" && password == AdminPassword)
         {
