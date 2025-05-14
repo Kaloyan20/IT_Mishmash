@@ -115,327 +115,359 @@ public class HomeController : Controller
     }
 
     [HttpPost]
-    public IActionResult Editor(string password, string action)
+    public IActionResult Editor(string password)
     {
-        if (action == "login" && password == AdminPassword)
+        if (password == AdminPassword)
         {
-            // Password is correct, show admin panel
-            var model = new AdminViewModel
-            {
-                IsAuthenticated = true,
-                Cpus = context.Cpus.ToList(),
-                Motherboards = context.Motherboards.ToList(),
-                Gpus = context.Gpus.ToList(),
-                Rams = context.Rams.ToList(),
-                Ssds = context.Ssds.ToList(),
-                Psus = context.Psus.ToList(),
-                Cases = context.Cases.ToList(),
-                Coolers = context.Coolers.ToList()
-            };
-            return View(model);
-        }
-
-        // Admin panel operations
-        if (password == AdminPassword || TempData["IsAdminAuthenticated"] as bool? == true)
-        {
-            TempData["IsAdminAuthenticated"] = true;
-
-            switch (action)
-            {
-                case "add":
-                    return HandleAdd();
-                case "edit":
-                    return HandleEdit();
-                case "delete":
-                    return HandleDelete();
-            }
+            // Password is correct, redirect to admin panel
+            return RedirectToAction("AdminPanel");
         }
 
         // Default case - show login
         return View(new AdminViewModel { IsAuthenticated = false });
     }
 
-    private IActionResult HandleAdd()
+    [HttpGet]
+    public IActionResult AdminPanel()
     {
-        var type = Request.Form["type"];
-
-        try
+        // Check authentication - you might want to use proper session management
+        var model = new AdminViewModel
         {
-            switch (type)
-            {
-                case "cpu":
-                    var cpu = new Cpu
-                    {
-                        Brand = Request.Form["brand"],
-                        Model = Request.Form["model"],
-                        SocketType = Request.Form["socketType"],
-                        Price = ParseDouble(Request.Form["price"])
-                    };
-                    context.Cpus.Add(cpu);
-                    break;
-
-                case "motherboard":
-                    var motherboard = new Motherboard
-                    {
-                        Brand = Request.Form["brand"],
-                        Model = Request.Form["model"],
-                        Chipset = Request.Form["chipset"],
-                        SocketType = Request.Form["socketType"],
-                        FormFactor = Request.Form["formFactor"],
-                        MemorySupport = Request.Form["memorySupport"],
-                        Color = Request.Form["color"],
-                        Price = ParseDouble(Request.Form["price"])
-                    };
-                    context.Motherboards.Add(motherboard);
-                    break;
-
-                case "gpu":
-                    var gpu = new Gpu
-                    {
-                        Brand = Request.Form["brand"],
-                        Model = Request.Form["model"],
-                        Memory = ParseInt(Request.Form["memory"]),
-                        PowerConsumption = ParseInt(Request.Form["powerConsumption"]),
-                        Color = Request.Form["color"],
-                        Price = ParseDouble(Request.Form["price"])
-                    };
-                    context.Gpus.Add(gpu);
-                    break;
-
-                case "ram":
-                    var ram = new Ram
-                    {
-                        Model = Request.Form["model"],
-                        MemorySize = ParseInt(Request.Form["memorySize"]),
-                        MemoryType = Request.Form["memoryType"],
-                        Color = Request.Form["color"],
-                        Price = ParseDouble(Request.Form["price"])
-                    };
-                    context.Rams.Add(ram);
-                    break;
-
-                case "ssd":
-                    var ssd = new Ssd
-                    {
-                        Model = Request.Form["model"],
-                        Storage = ParseInt(Request.Form["storage"]),
-                        Price = ParseDouble(Request.Form["price"])
-                    };
-                    context.Ssds.Add(ssd);
-                    break;
-
-                case "psu":
-                    var psu = new Psu
-                    {
-                        Model = Request.Form["model"],
-                        Wattage = ParseInt(Request.Form["wattage"]),
-                        Rating = Request.Form["rating"],
-                        Size = Request.Form["size"],
-                        Color = Request.Form["color"],
-                        Price = ParseDouble(Request.Form["price"])
-                    };
-                    context.Psus.Add(psu);
-                    break;
-
-                case "case":
-                    var caseItem = new Case
-                    {
-                        Model = Request.Form["model"],
-                        Aio = ParseBool(Request.Form["aio"]),
-                        Size = Request.Form["size"],
-                        Color = Request.Form["color"],
-                        Price = ParseDouble(Request.Form["price"])
-                    };
-                    context.Cases.Add(caseItem);
-                    break;
-
-                case "cooler":
-                    var cooler = new Cooler
-                    {
-                        Model = Request.Form["model"],
-                        Aio = ParseBool(Request.Form["aio"]),
-                        MiniItxCompatibility = ParseBool(Request.Form["miniItxCompatibility"]),
-                        Color = Request.Form["color"],
-                        Price = ParseDouble(Request.Form["price"])
-                    };
-                    context.Coolers.Add(cooler);
-                    break;
-            }
-
-            context.SaveChanges();
-            TempData["Success"] = "Component added successfully!";
-        }
-        catch (Exception ex)
-        {
-            TempData["Error"] = $"Error adding component: {ex.Message}";
-        }
-
-        return RedirectToAction("Admin");
+            IsAuthenticated = true,
+            Cpus = context.Cpus.ToList(),
+            Motherboards = context.Motherboards.ToList(),
+            Gpus = context.Gpus.ToList(),
+            Rams = context.Rams.ToList(),
+            Ssds = context.Ssds.ToList(),
+            Psus = context.Psus.ToList(),
+            Cases = context.Cases.ToList(),
+            Coolers = context.Coolers.ToList()
+        };
+        return View(model);
     }
 
-    private IActionResult HandleEdit()
+    // Add Component Views
+    [HttpGet]
+    public IActionResult AddComponent(string type)
     {
-        var type = Request.Form["type"];
-        var id = ParseInt(Request.Form["id"]);
+        ViewBag.ComponentType = type;
+        ViewBag.Title = $"Add {type.ToUpper()}";
 
-        try
+        switch (type.ToLower())
         {
-            switch (type)
-            {
-                case "cpu":
-                    var cpu = context.Cpus.Find(id);
-                    if (cpu != null)
-                    {
-                        cpu.Brand = Request.Form["brand"];
-                        cpu.Model = Request.Form["model"];
-                        cpu.SocketType = Request.Form["socketType"];
-                        cpu.Price = ParseDouble(Request.Form["price"]);
-                    }
-                    break;
-
-                case "motherboard":
-                    var motherboard = context.Motherboards.Find(id);
-                    if (motherboard != null)
-                    {
-                        motherboard.Brand = Request.Form["brand"];
-                        motherboard.Model = Request.Form["model"];
-                        motherboard.Chipset = Request.Form["chipset"];
-                        motherboard.SocketType = Request.Form["socketType"];
-                        motherboard.FormFactor = Request.Form["formFactor"];
-                        motherboard.MemorySupport = Request.Form["memorySupport"];
-                        motherboard.Color = Request.Form["color"];
-                        motherboard.Price = ParseDouble(Request.Form["price"]);
-                    }
-                    break;
-
-                case "gpu":
-                    var gpu = context.Gpus.Find(id);
-                    if (gpu != null)
-                    {
-                        gpu.Brand = Request.Form["brand"];
-                        gpu.Model = Request.Form["model"];
-                        gpu.Memory = ParseInt(Request.Form["memory"]);
-                        gpu.PowerConsumption = ParseInt(Request.Form["powerConsumption"]);
-                        gpu.Color = Request.Form["color"];
-                        gpu.Price = ParseDouble(Request.Form["price"]);
-                    }
-                    break;
-
-                case "ram":
-                    var ram = context.Rams.Find(id);
-                    if (ram != null)
-                    {
-                        ram.Model = Request.Form["model"];
-                        ram.MemorySize = ParseInt(Request.Form["memorySize"]);
-                        ram.MemoryType = Request.Form["memoryType"];
-                        ram.Color = Request.Form["color"];
-                        ram.Price = ParseDouble(Request.Form["price"]);
-                    }
-                    break;
-
-                case "ssd":
-                    var ssd = context.Ssds.Find(id);
-                    if (ssd != null)
-                    {
-                        ssd.Model = Request.Form["model"];
-                        ssd.Storage = ParseInt(Request.Form["storage"]);
-                        ssd.Price = ParseDouble(Request.Form["price"]);
-                    }
-                    break;
-
-                case "psu":
-                    var psu = context.Psus.Find(id);
-                    if (psu != null)
-                    {
-                        psu.Model = Request.Form["model"];
-                        psu.Wattage = ParseInt(Request.Form["wattage"]);
-                        psu.Rating = Request.Form["rating"];
-                        psu.Size = Request.Form["size"];
-                        psu.Color = Request.Form["color"];
-                        psu.Price = ParseDouble(Request.Form["price"]);
-                    }
-                    break;
-
-                case "case":
-                    var caseItem = context.Cases.Find(id);
-                    if (caseItem != null)
-                    {
-                        caseItem.Model = Request.Form["model"];
-                        caseItem.Aio = ParseBool(Request.Form["aio"]);
-                        caseItem.Size = Request.Form["size"];
-                        caseItem.Color = Request.Form["color"];
-                        caseItem.Price = ParseDouble(Request.Form["price"]);
-                    }
-                    break;
-
-                case "cooler":
-                    var cooler = context.Coolers.Find(id);
-                    if (cooler != null)
-                    {
-                        cooler.Model = Request.Form["model"];
-                        cooler.Aio = ParseBool(Request.Form["aio"]);
-                        cooler.MiniItxCompatibility = ParseBool(Request.Form["miniItxCompatibility"]);
-                        cooler.Color = Request.Form["color"];
-                        cooler.Price = ParseDouble(Request.Form["price"]);
-                    }
-                    break;
-            }
-
-            context.SaveChanges();
-            TempData["Success"] = "Component updated successfully!";
+            case "cpu":
+                return View("AddCpu", new Cpu());
+            case "motherboard":
+                return View("AddMotherboard", new Motherboard());
+            case "gpu":
+                return View("AddGpu", new Gpu());
+            case "ram":
+                return View("AddRam", new Ram());
+            case "ssd":
+                return View("AddSsd", new Ssd());
+            case "psu":
+                return View("AddPsu", new Psu());
+            case "case":
+                return View("AddCase", new Case());
+            case "cooler":
+                return View("AddCooler", new Cooler());
+            default:
+                return NotFound();
         }
-        catch (Exception ex)
-        {
-            TempData["Error"] = $"Error updating component: {ex.Message}";
-        }
-
-        return RedirectToAction("Admin");
     }
 
-    private IActionResult HandleDelete()
+    // Edit Component Views
+    [HttpGet]
+    public IActionResult EditComponent(string type, int id)
     {
-        var type = Request.Form["type"];
-        var id = ParseInt(Request.Form["id"]);
+        ViewBag.ComponentType = type;
+        ViewBag.Title = $"Edit {type.ToUpper()}";
 
+        switch (type.ToLower())
+        {
+            case "cpu":
+                var cpu = context.Cpus.Find(id);
+                if (cpu == null) return NotFound();
+                return View("EditCpu", cpu);
+            case "motherboard":
+                var motherboard = context.Motherboards.Find(id);
+                if (motherboard == null) return NotFound();
+                return View("EditMotherboard", motherboard);
+            case "gpu":
+                var gpu = context.Gpus.Find(id);
+                if (gpu == null) return NotFound();
+                return View("EditGpu", gpu);
+            case "ram":
+                var ram = context.Rams.Find(id);
+                if (ram == null) return NotFound();
+                return View("EditRam", ram);
+            case "ssd":
+                var ssd = context.Ssds.Find(id);
+                if (ssd == null) return NotFound();
+                return View("EditSsd", ssd);
+            case "psu":
+                var psu = context.Psus.Find(id);
+                if (psu == null) return NotFound();
+                return View("EditPsu", psu);
+            case "case":
+                var caseItem = context.Cases.Find(id);
+                if (caseItem == null) return NotFound();
+                return View("EditCase", caseItem);
+            case "cooler":
+                var cooler = context.Coolers.Find(id);
+                if (cooler == null) return NotFound();
+                return View("EditCooler", cooler);
+            default:
+                return NotFound();
+        }
+    }
+
+    // Add Component Actions
+    [HttpPost]
+    public IActionResult AddCpu(Cpu cpu)
+    {
+        if (ModelState.IsValid)
+        {
+            context.Cpus.Add(cpu);
+            context.SaveChanges();
+            TempData["Success"] = "CPU added successfully!";
+            return RedirectToAction("AdminPanel");
+        }
+        return View(cpu);
+    }
+
+    [HttpPost]
+    public IActionResult AddMotherboard(Motherboard motherboard)
+    {
+        if (ModelState.IsValid)
+        {
+            context.Motherboards.Add(motherboard);
+            context.SaveChanges();
+            TempData["Success"] = "Motherboard added successfully!";
+            return RedirectToAction("AdminPanel");
+        }
+        return View(motherboard);
+    }
+
+    [HttpPost]
+    public IActionResult AddGpu(Gpu gpu)
+    {
+        if (ModelState.IsValid)
+        {
+            context.Gpus.Add(gpu);
+            context.SaveChanges();
+            TempData["Success"] = "GPU added successfully!";
+            return RedirectToAction("AdminPanel");
+        }
+        return View(gpu);
+    }
+
+    [HttpPost]
+    public IActionResult AddRam(Ram ram)
+    {
+        if (ModelState.IsValid)
+        {
+            context.Rams.Add(ram);
+            context.SaveChanges();
+            TempData["Success"] = "RAM added successfully!";
+            return RedirectToAction("AdminPanel");
+        }
+        return View(ram);
+    }
+
+    [HttpPost]
+    public IActionResult AddSsd(Ssd ssd)
+    {
+        if (ModelState.IsValid)
+        {
+            context.Ssds.Add(ssd);
+            context.SaveChanges();
+            TempData["Success"] = "SSD added successfully!";
+            return RedirectToAction("AdminPanel");
+        }
+        return View(ssd);
+    }
+
+    [HttpPost]
+    public IActionResult AddPsu(Psu psu)
+    {
+        if (ModelState.IsValid)
+        {
+            context.Psus.Add(psu);
+            context.SaveChanges();
+            TempData["Success"] = "PSU added successfully!";
+            return RedirectToAction("AdminPanel");
+        }
+        return View(psu);
+    }
+
+    [HttpPost]
+    public IActionResult AddCase(Case caseItem)
+    {
+        if (ModelState.IsValid)
+        {
+            context.Cases.Add(caseItem);
+            context.SaveChanges();
+            TempData["Success"] = "Case added successfully!";
+            return RedirectToAction("AdminPanel");
+        }
+        return View(caseItem);
+    }
+
+    [HttpPost]
+    public IActionResult AddCooler(Cooler cooler)
+    {
+        if (ModelState.IsValid)
+        {
+            context.Coolers.Add(cooler);
+            context.SaveChanges();
+            TempData["Success"] = "Cooler added successfully!";
+            return RedirectToAction("AdminPanel");
+        }
+        return View(cooler);
+    }
+
+    // Edit Component Actions
+    [HttpPost]
+    public IActionResult EditCpu(Cpu cpu)
+    {
+        if (ModelState.IsValid)
+        {
+            context.Cpus.Update(cpu);
+            context.SaveChanges();
+            TempData["Success"] = "CPU updated successfully!";
+            return RedirectToAction("AdminPanel");
+        }
+        return View(cpu);
+    }
+
+    [HttpPost]
+    public IActionResult EditMotherboard(Motherboard motherboard)
+    {
+        if (ModelState.IsValid)
+        {
+            context.Motherboards.Update(motherboard);
+            context.SaveChanges();
+            TempData["Success"] = "Motherboard updated successfully!";
+            return RedirectToAction("AdminPanel");
+        }
+        return View(motherboard);
+    }
+
+    [HttpPost]
+    public IActionResult EditGpu(Gpu gpu)
+    {
+        if (ModelState.IsValid)
+        {
+            context.Gpus.Update(gpu);
+            context.SaveChanges();
+            TempData["Success"] = "GPU updated successfully!";
+            return RedirectToAction("AdminPanel");
+        }
+        return View(gpu);
+    }
+
+    [HttpPost]
+    public IActionResult EditRam(Ram ram)
+    {
+        if (ModelState.IsValid)
+        {
+            context.Rams.Update(ram);
+            context.SaveChanges();
+            TempData["Success"] = "RAM updated successfully!";
+            return RedirectToAction("AdminPanel");
+        }
+        return View(ram);
+    }
+
+    [HttpPost]
+    public IActionResult EditSsd(Ssd ssd)
+    {
+        if (ModelState.IsValid)
+        {
+            context.Ssds.Update(ssd);
+            context.SaveChanges();
+            TempData["Success"] = "SSD updated successfully!";
+            return RedirectToAction("AdminPanel");
+        }
+        return View(ssd);
+    }
+
+    [HttpPost]
+    public IActionResult EditPsu(Psu psu)
+    {
+        if (ModelState.IsValid)
+        {
+            context.Psus.Update(psu);
+            context.SaveChanges();
+            TempData["Success"] = "PSU updated successfully!";
+            return RedirectToAction("AdminPanel");
+        }
+        return View(psu);
+    }
+
+    [HttpPost]
+    public IActionResult EditCase(Case caseItem)
+    {
+        if (ModelState.IsValid)
+        {
+            context.Cases.Update(caseItem);
+            context.SaveChanges();
+            TempData["Success"] = "Case updated successfully!";
+            return RedirectToAction("AdminPanel");
+        }
+        return View(caseItem);
+    }
+
+    [HttpPost]
+    public IActionResult EditCooler(Cooler cooler)
+    {
+        if (ModelState.IsValid)
+        {
+            context.Coolers.Update(cooler);
+            context.SaveChanges();
+            TempData["Success"] = "Cooler updated successfully!";
+            return RedirectToAction("AdminPanel");
+        }
+        return View(cooler);
+    }
+
+    // Delete Component Actions
+    [HttpPost]
+    public IActionResult DeleteComponent(string type, int id)
+    {
         try
         {
-            switch (type)
+            switch (type.ToLower())
             {
                 case "cpu":
                     var cpu = context.Cpus.Find(id);
                     if (cpu != null) context.Cpus.Remove(cpu);
                     break;
-
                 case "motherboard":
                     var motherboard = context.Motherboards.Find(id);
                     if (motherboard != null) context.Motherboards.Remove(motherboard);
                     break;
-
                 case "gpu":
                     var gpu = context.Gpus.Find(id);
                     if (gpu != null) context.Gpus.Remove(gpu);
                     break;
-
                 case "ram":
                     var ram = context.Rams.Find(id);
                     if (ram != null) context.Rams.Remove(ram);
                     break;
-
                 case "ssd":
                     var ssd = context.Ssds.Find(id);
                     if (ssd != null) context.Ssds.Remove(ssd);
                     break;
-
                 case "psu":
                     var psu = context.Psus.Find(id);
                     if (psu != null) context.Psus.Remove(psu);
                     break;
-
                 case "case":
                     var caseItem = context.Cases.Find(id);
                     if (caseItem != null) context.Cases.Remove(caseItem);
                     break;
-
                 case "cooler":
                     var cooler = context.Coolers.Find(id);
                     if (cooler != null) context.Coolers.Remove(cooler);
@@ -443,31 +475,14 @@ public class HomeController : Controller
             }
 
             context.SaveChanges();
-            TempData["Success"] = "Component deleted successfully!";
+            TempData["Success"] = $"{type} deleted successfully!";
         }
         catch (Exception ex)
         {
-            TempData["Error"] = $"Error deleting component: {ex.Message}";
+            TempData["Error"] = $"Error deleting {type}: {ex.Message}";
         }
 
-        return RedirectToAction("Admin");
-    }
-
-    // Helper methods
-    private double? ParseDouble(string value)
-    {
-        return double.TryParse(value, out double result) ? result : null;
-    }
-
-    private int? ParseInt(string value)
-    {
-        return int.TryParse(value, out int result) ? result : null;
-    }
-
-    private bool? ParseBool(string value)
-    {
-        return value?.ToLower() == "true" || value == "1" ? true :
-               value?.ToLower() == "false" || value == "0" ? false : null;
+        return RedirectToAction("AdminPanel");
     }
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
