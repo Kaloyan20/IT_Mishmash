@@ -2,7 +2,7 @@ using System.Diagnostics;
 using Data;
 using Microsoft.AspNetCore.Mvc;
 using PC_Parts_Picker.Models;
-using Services;
+//using Services;
 
 namespace PC_Parts_Picker.Controllers;
 
@@ -15,12 +15,12 @@ public class HomeController : Controller
         this.context = context;
     }
 
-    public IActionResult Index()
-    {
-        PCService pcService = new PCService();
-        pcService.CreatePC();
-        return View();
-    }
+    //public IActionResult Index()
+    //{
+        //PCService pcService = new PCService();
+        //pcService.CreatePC();
+       // return View();
+    //}
 
     public IActionResult Privacy()
     {
